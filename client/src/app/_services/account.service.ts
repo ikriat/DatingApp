@@ -21,7 +21,7 @@ export class AccountService {
       map((response: User) => {
         const user = response;
         if(user) {
-          this.currentUserSource.next(user);
+          this.setCurrentUser(user);
         }        
       })
     );
