@@ -1,24 +1,35 @@
 <div class="row">
-    <div class="col-2" *ngFor="let photo of member.photos">
-        <img src="{{photo.url}}" alt="{{photo.url}}" class="img-thumbnail p-1">
+    <div class="col-2 img-wrapper" *ngFor="let photo of member.photos">
+        <img src="{{photo.url}}" alt="{{photo.url}}" class="img-thumbnail p-1"
+            [class.not-approved]="!photo.isApproved"
+        >
+
+        <div class="text-center img-text" *ngIf="!photo.isApproved">
+            <span class="text-danger">Awaiting approval</span>
+        </div>
+
         <div class="text-center">
-            <button
-                [disabled]="photo.isMain" 
+            <button 
+                [disabled]="photo.isMain || !photo.isApproved"
                 (click)="setMainPhoto(photo)"
                 [ngClass]='photo.isMain ? "btn-success active" : "btn-outline-success"'
-                class="btn btn-sm">Main</button>
+                class="btn btn-sm"
+            >Main</button>
             <button 
                 [disabled]="photo.isMain"
                 (click)="deletePhoto(photo.id)"
-                class="btn btn-sm btn-danger">
-                <i class="fa fa-trash"></i></button>
+                class="btn btn-sm btn-danger"
+            ><i class="fa fa-trash"></i></button>
         </div>
     </div>
 </div>
 
 <div class="row mt-3">
+ 
     <div class="col-md-3">
+
         <h3>Add Photos</h3>
+
         <div ng2FileDrop
              [ngClass]="{'nv-file-over': hasBaseDropzoneOver}"
              (fileOver)="fileOverBase($event)"
@@ -34,9 +45,12 @@
         Single
         <input type="file" ng2FileSelect [uploader]="uploader" />
     </div>
+
     <div class="col-md-9" style="margin-bottom: 40px" *ngIf="uploader?.queue?.length">
+
         <h3>Upload queue</h3>
         <p>Queue length: {{ uploader?.queue?.length }}</p>
+
         <table class="table">
             <thead>
             <tr>
@@ -51,6 +65,7 @@
             </tr>
             </tbody>
         </table>
+
         <div>
             <div>
                 Queue progress:
@@ -71,5 +86,7 @@
                 <span class="fa fa-trash"></span> Remove all
             </button>
         </div>
+
     </div>
+
 </div>
