@@ -32,16 +32,16 @@ namespace API.Controllers
                 return BadRequest("You cannot send messages to yourself");
 
             var sender = await _userRepository.GetUserByUsernameAsync(username);
-            var recepient = await _userRepository.GetUserByUsernameAsync(createMessageDto.RecipientUsername);
+            var recipient = await _userRepository.GetUserByUsernameAsync(createMessageDto.RecipientUsername);
 
-            if (recepient == null) return NotFound();
+            if (recipient == null) return NotFound();
 
             var message = new Message
             {
                 Sender = sender,
-                Recipient = recepient,
+                Recipient = recipient,
                 SenderUsername = sender.UserName,
-                RecipientUsername = recepient.UserName,
+                RecipientUsername = recipient.UserName,
                 Content = createMessageDto.Content
             };
 
