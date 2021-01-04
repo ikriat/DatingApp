@@ -72,7 +72,7 @@ namespace API.SignalR
 
             var group = await _unitOfWork.MessageRepository.GetMessageGroup(groupName);
 
-            if (group.Connections.Any(x => x.Username == sender.UserName))
+            if (group.Connections.Any(x => x.Username == recipient.UserName))
             {
                 message.DateRead = DateTime.UtcNow;
             }
